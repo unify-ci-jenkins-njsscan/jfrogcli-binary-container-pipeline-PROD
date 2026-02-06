@@ -52,7 +52,6 @@ pipeline {
         '''
       }
     }
-
     stage('Display SARIF Output') {
       steps {
         sh 'cat jfrog-sarif-results.sarif'
@@ -60,11 +59,22 @@ pipeline {
     }
   }
 
-  post {
-    always {
-      archiveArtifacts artifacts: 'jfrog-sarif-results.sarif', fingerprint: true
-      echo 'Cleaning up JFrog configuration...'
-      sh './jf config remove cbjfrog-server-test --quiet'
-    }
-  }
+  stage('Security Scan') {
+            steps {
+                registerSecurityScan(
+                    // Security Scan to include
+                    artifacts: "jfrog-sarif-results.sarif",
+                    format: "sarif",
+                    archive: true
+                )
+            }
+        }
+  
+  // post {
+  //   always {
+  //     archiveArtifacts artifacts: 'jfrog-sarif-results.sarif', fingerprint: true
+  //     echo 'Cleaning up JFrog configuration...'
+  //     sh './jf config remove cbjfrog-server-test --quiet'
+  //   }
+  // }
 }
