@@ -52,14 +52,7 @@ pipeline {
         '''
       }
     }
-    stage('Display SARIF Output') {
-      steps {
-        sh 'cat jfrog-sarif-results.sarif'
-      }
-    }
-  }
-
-  stage('Security Scan') {
+    stage('Security Scan') {
             steps {
                 registerSecurityScan(
                     // Security Scan to include
@@ -69,6 +62,12 @@ pipeline {
                 )
             }
         }
+    stage('Display SARIF Output') {
+      steps {
+        sh 'cat jfrog-sarif-results.sarif'
+      }
+    }
+  }
   
   // post {
   //   always {
