@@ -10,7 +10,7 @@ pipeline {
   }
   
   triggers {
-        cron '00 01 * * 1-5' // Runs at 01:00 on every day-of-week from Monday through Friday
+        cron '50 22 * * 1,4' // Runs at 22:50 on Monday and Thursday
     }
 
   stages {
@@ -34,7 +34,7 @@ pipeline {
         )]) {
           sh '''
             echo ":key: Configuring JFrog CLI with provided credentials..."
-            ./jf config add cbjfrog-server-test-binary \
+            ./jf config add cbjfrog-server-test-prod \
               --url=${JFROG_SERVER} \
               --user=$JF_USER \
               --password=$JF_PASS \
