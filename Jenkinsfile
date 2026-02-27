@@ -25,24 +25,24 @@ pipeline {
       }
     }
 
-    stage('Configure JFrog CLI') {
-      steps {
-        withCredentials([usernamePassword(
-          credentialsId: 'jfrog-cli-credentials',
-          usernameVariable: 'JF_USER',
-          passwordVariable: 'JF_PASS'
-        )]) {
-          sh '''
-            echo ":key: Configuring JFrog CLI with provided credentials..."
-            ./jf config add cbjfrog-server-test1-prod \
-              --url=${JFROG_SERVER} \
-              --user=$JF_USER \
-              --password=$JF_PASS \
-              --interactive=false
-          '''
-        }
-      }
-    }
+    // stage('Configure JFrog CLI') {
+    //   steps {
+    //     withCredentials([usernamePassword(
+    //       credentialsId: 'jfrog-cli-credentials',
+    //       usernameVariable: 'JF_USER',
+    //       passwordVariable: 'JF_PASS'
+    //     )]) {
+    //       sh '''
+    //         echo ":key: Configuring JFrog CLI with provided credentials..."
+    //         ./jf config add cbjfrog-server-test1-prod \
+    //           --url=${JFROG_SERVER} \
+    //           --user=$JF_USER \
+    //           --password=$JF_PASS \
+    //           --interactive=false
+    //       '''
+    //     }
+    //   }
+    // }
 
     stage('Scan Image with JFrog CLI') {
       steps {
